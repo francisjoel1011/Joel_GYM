@@ -780,6 +780,13 @@ html.js .preloader {
 
 .membership { padding: clamp(4rem, 12vh, 7rem) var(--gutter); max-width: var(--container); margin-inline: auto; text-align: center; }
 .membership .section-head { margin-bottom: 0.75rem; }
+.membership__note { color: rgba(255,255,255,0.6); }
+.membership__terms {
+  margin-top: 2.5rem;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
 
 .tiers {
   margin-top: 3rem;
@@ -796,56 +803,45 @@ html.js .preloader {
   flex-direction: column;
   gap: 1.25rem;
 }
-.tier-card--featured {
-  border-color: var(--gold);
-  background: linear-gradient(180deg, rgba(255,199,44,0.08), transparent 40%);
-}
 .tier-card__name {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 4vw, 2rem);
   text-transform: uppercase;
 }
-.tier-card__price { display: flex; align-items: baseline; gap: 0.35em; }
-.tier-card__amount { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3rem); }
-.tier-card--featured .tier-card__amount { color: var(--gold); font-size: clamp(2.4rem, 7vw, 3.6rem); }
-.tier-card__period { font-family: var(--font-condensed); color: rgba(255,255,255,0.5); }
-.tier-card__features { display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
-.tier-card__features li {
-  color: rgba(255,255,255,0.75);
-  padding-left: 1.2em;
-  position: relative;
-  font-size: 0.95rem;
-}
-.tier-card__features li::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0.55em;
-  width: 7px; height: 7px;
-  background: var(--red);
-}
 
-/* Recommended-tier hang-tag — echoes a gym equipment weight tag rather
-   than the generic "scaled 110% + ribbon" cliché. */
-.tag-flag {
-  position: absolute;
-  top: -14px;
-  right: 24px;
-  background: var(--gold);
-  color: var(--ink);
+/* Real duration/price rate card (Weight Training, Cardio) — the 12-month
+   row is marked up as the best per-month value, an objective fact from the
+   real rate card, not a fabricated "most popular" marketing claim. */
+.price-list { display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+.price-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.price-list__term {
   font-family: var(--font-condensed);
-  font-size: 0.72rem;
-  line-height: 1.15;
-  letter-spacing: 0.05em;
-  text-align: center;
   text-transform: uppercase;
-  padding: 0.5em 0.9em 0.9em;
-  transform: rotate(-6deg);
-  clip-path: polygon(0 0, 100% 0, 100% 68%, 50% 100%, 0 68%);
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9rem;
+}
+.price-list__amount { font-family: var(--font-display); font-size: 1.35rem; }
+.price-list__best { border-color: var(--gold); background: rgba(255,199,44,0.08); }
+.price-list__best .price-list__amount { color: var(--gold); }
+.price-list__best .price-list__term::after {
+  content: "Best per-month value";
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  margin-top: 0.2em;
 }
 
 @media (min-width: 900px) {
-  .tiers { grid-template-columns: repeat(3, 1fr); }
-  .tier-card--featured { transform: translateY(-0.75rem); }
+  .tiers--pricing { grid-template-columns: repeat(2, 1fr); max-width: 760px; margin-inline: auto; }
 }
 
 /* ==========================================================================
