@@ -1,0 +1,1029 @@
+/* ==========================================================================
+   JOEL GYM — stylesheet
+   Concept: a neighborhood iron temple, not a wellness spa. Grounded intensity,
+   earned grit. Black / red / gold / white — nothing else.
+   Type: Anton (shout) / Bebas Neue (state) / Archivo (body+UI).
+   ========================================================================== */
+
+:root {
+  /* ---- palette (BRIEF.md section 4) ---- */
+  --ink: #0E0E0F;
+  --ink-2: #17171A;
+  --red: #E4231C;
+  --red-dim: #a51b16;
+  --gold: #FFC72C;
+  --white: #FFFFFF;
+  --rubber-1: #2B211C;
+  --rubber-2: #1A1512;
+  --mortar: #6B6B6B;
+
+  /* ---- type ---- */
+  --font-display: 'Anton', 'Arial Narrow Bold', 'Arial Black', sans-serif;
+  --font-condensed: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --font-body: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+
+  --fs-hero: clamp(3.5rem, 16vw, 14rem);
+  --fs-section: clamp(2rem, 7vw, 5.5rem);
+  --fs-stat: clamp(2.5rem, 9vw, 7rem);
+  --fs-subhead: clamp(1.5rem, 2.5vw, 2.25rem);
+  --fs-body: clamp(1rem, 0.7rem + 1.1vw, 1.125rem);
+  --fs-kicker: clamp(0.75rem, 0.62rem + 0.5vw, 0.95rem);
+
+  /* ---- motion ---- */
+  --ease-power2-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-power4-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-back-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ---- layout ---- */
+  --gutter: 1.25rem;
+  --container: 1440px;
+  --z-preloader: 9999;
+  --z-nav: 500;
+  --z-mobile-menu: 490;
+}
+
+@media (min-width: 640px) { :root { --gutter: 2rem; } }
+@media (min-width: 1024px) { :root { --gutter: 3rem; } }
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body, h1, h2, h3, h4, p, figure, blockquote, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+svg { display: block; }
+
+html {
+  background: var(--ink);
+  scroll-padding-top: 90px;
+  overflow-x: hidden;
+}
+body {
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+::selection { background: var(--gold); color: var(--ink); }
+
+/* Native smooth-scroll fallback for the no-JS-but-motion-ok case; Lenis
+   owns scrolling once .js is present, so it's excluded here to avoid the
+   two smoothers fighting. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.js) { scroll-behavior: smooth; }
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  background: var(--gold);
+  color: var(--ink);
+  padding: 0.75em 1.25em;
+  font-family: var(--font-condensed);
+  letter-spacing: 0.04em;
+  transition: top 0.2s var(--ease-power2-out);
+}
+.skip-link:focus { top: 1rem; }
+
+/* Focus states get the same care as hover — gold reads as "actionable" */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Type utilities
+   ========================================================================== */
+
+.kicker {
+  font-family: var(--font-condensed);
+  font-size: var(--fs-kicker);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.section-head {
+  font-family: var(--font-display);
+  font-size: var(--fs-section);
+  line-height: 0.88;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  margin-top: 0.35em;
+}
+
+.body-copy {
+  font-size: var(--fs-body);
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 42ch;
+}
+
+/* Small honest disclosure used on every placeholder block sitewide, in
+   addition to the HTML dev comments. Deliberately quiet, on-type, never a
+   loud "broken" banner. */
+.sample-note {
+  font-family: var(--font-condensed);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+  margin-top: 0.6em;
+}
+.sample-note--center { text-align: center; margin-inline: auto; }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-family: var(--font-condensed);
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.95em 1.9em;
+  border-radius: 999px;
+  transition: transform 0.35s var(--ease-power2-out), background-color 0.2s, box-shadow 0.2s;
+  will-change: auto;
+}
+
+/* Gold is reserved for conversion — Join Now, phone CTA, pricing. Never
+   used for a purely structural/brand element, and red never carries a CTA. */
+.btn--gold {
+  background: var(--gold);
+  color: var(--ink);
+}
+.btn--gold:hover { box-shadow: 0 0 0 4px rgba(255, 199, 44, 0.22); }
+
+.btn--outline {
+  background: transparent;
+  color: var(--white);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+.btn--outline:hover { box-shadow: inset 0 0 0 2px var(--gold); color: var(--gold); }
+
+.btn--lg { padding: 1.1em 2.4em; font-size: 1.2rem; }
+.btn--block { width: 100%; }
+.btn__icon { font-size: 0.9em; }
+
+/* Magnetic buttons: JS drives the pointer-follow + elastic release via
+   transform only. This class is added/removed by JS right around the
+   interaction so will-change stays surgical rather than permanent. */
+.btn.is-magnet-active { will-change: transform; }
+
+/* ==========================================================================
+   Iron Grade — the shared photo treatment (BRIEF.md section 7)
+   ========================================================================== */
+
+.photo, .hero__media, .mural__media, .about__media, .facility-panel__media,
+.gallery-item, .divider-band {
+  position: relative;
+  overflow: hidden;
+  background: var(--rubber-2);
+}
+
+.photo img, .hero__media img, .mural__media img, .about__media img,
+.facility-panel__media img, .gallery-item img, .divider-band img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 1. uniform base filter + 5. per-image EV nudge via --photo-ev custom prop */
+.iron-grade {
+  filter: saturate(0.82) contrast(1.12) brightness(calc(0.97 * var(--photo-ev, 1)));
+}
+
+/* 2. selective shadow tint toward brand red (never teal/orange) */
+.photo::before, .hero__media::before, .mural__media::before, .about__media::before,
+.facility-panel__media::before, .gallery-item::before, .divider-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 4. fine grain overlay, unifies photos shot on different phones/sensors */
+.photo::after, .hero__media::after, .mural__media::after, .about__media::after,
+.facility-panel__media::after, .gallery-item::after, .divider-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/grain.svg");
+  background-size: 180px 180px;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 3. fixed crop ratios, held sitewide — never a native arbitrary phone ratio.
+   Ratio lives on the CONTAINER (not the img, which is already width/height:
+   100% from the rule above) so the grid gives every item a definite,
+   deliberate box for object-fit: cover to crop into. */
+.photo--about { aspect-ratio: 4 / 5; }
+
+/* ==========================================================================
+   Preloader — capped hard under 600ms, never blocks no-JS visitors
+   ========================================================================== */
+
+html:not(.js) .preloader { display: none; }
+
+html.js .preloader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-preloader);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  /* CSS failsafe: hides itself even if JS errors before finishing its own
+     (faster, nicer) fade — belt and braces against a stuck black screen. */
+  animation: preloader-failsafe 0s 1.1s forwards;
+}
+.preloader__mark { width: 15vw; max-width: 84px; min-width: 44px; }
+
+@keyframes preloader-failsafe {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .preloader { display: none; }
+}
+
+/* ==========================================================================
+   Nav
+   ========================================================================== */
+
+.site-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-nav);
+  background: transparent;
+  transition: background-color 0.4s var(--ease-power2-out), box-shadow 0.4s var(--ease-power2-out);
+}
+.site-nav.is-scrolled {
+  background: rgba(14, 14, 15, 0.92);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 0 0 var(--red);
+}
+
+.nav-inner {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: 0.9rem var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-logo { display: flex; align-items: center; }
+.nav-logo__full {
+  height: 26px;
+  width: auto;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.6s var(--ease-power2-out), transform 0.6s var(--ease-power2-out);
+}
+/* Deferred logo payoff: the wordmark is withheld through the hero and
+   arrives once the nav resolves — a reward, not a banner. */
+.site-nav.is-scrolled .nav-logo__full,
+.site-nav.is-revealed .nav-logo__full { opacity: 1; transform: scale(1); }
+.wordmark-text { font-family: var(--font-display); font-size: 150px; letter-spacing: -2px; fill: var(--white); }
+
+.nav-logo__badge { height: 34px; width: 34px; display: none; }
+
+.nav-links { display: none; }
+.nav-actions { display: none; }
+
+.nav-phone {
+  font-family: var(--font-condensed);
+  letter-spacing: 0.05em;
+  font-size: 0.95rem;
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  opacity: 0.85;
+}
+.nav-phone:hover { color: var(--gold); opacity: 1; }
+.nav-phone__icon { transform: scaleX(-1); }
+
+.nav-burger {
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.nav-burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  transition: transform 0.3s var(--ease-power2-out), opacity 0.3s;
+}
+.nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-mobile-menu);
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem var(--gutter);
+  transform: translateY(-100%);
+  transition: transform 0.45s var(--ease-power4-out);
+}
+.mobile-menu.is-open { transform: translateY(0); }
+.mobile-menu nav { display: flex; flex-direction: column; gap: 1.1rem; }
+.mobile-menu nav a {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 9vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+.mobile-menu nav a:hover { color: var(--red); }
+.nav-phone--mobile { font-size: 1.3rem; }
+
+@media (min-width: 1024px) {
+  .nav-logo__full { height: 30px; }
+  .nav-links { display: flex; gap: 2rem; margin-left: 1rem; }
+  .nav-links a {
+    font-family: var(--font-condensed);
+    letter-spacing: 0.06em;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 100%; bottom: 0;
+    height: 2px;
+    background: var(--red);
+    transition: right 0.3s var(--ease-power2-out);
+  }
+  .nav-links a:hover::after { right: 0; }
+  .nav-actions { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; }
+  .nav-burger, .mobile-menu { display: none; }
+}
+
+@media (max-width: 639.98px) {
+  .nav-logo__full { display: none; }
+  .nav-logo__badge { display: block; }
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 0 var(--gutter) clamp(3rem, 10vh, 6rem);
+}
+.hero__media { position: absolute; inset: 0; z-index: 0; }
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(0deg, var(--ink) 0%, rgba(14,14,15,0.55) 42%, rgba(14,14,15,0.35) 65%, rgba(14,14,15,0.55) 100%);
+}
+
+.hero__content { position: relative; z-index: 2; max-width: 60rem; }
+.hero__headline {
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-block: 0.15em 0.25em;
+}
+.hero__headline .line { display: block; overflow: hidden; }
+.hero__headline .line:last-child { color: var(--red); }
+.hero__sub {
+  font-size: var(--fs-body);
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 38ch;
+  margin-bottom: 1.6rem;
+}
+
+.scroll-cue {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(1.5rem, 4vh, 2.5rem);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+.scroll-cue__line {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(0deg, transparent, var(--gold));
+}
+.scroll-cue__label {
+  font-family: var(--font-condensed);
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+}
+
+/* JS-driven entrance: JS sets the "from" state via gsap.set() right before
+   animating, only once GSAP has actually initialized — so [data-hero-in]
+   elements are never hidden by CSS alone and always show if JS fails. */
+
+@media (min-width: 1024px) {
+  .hero__content { max-width: 68rem; }
+}
+
+/* Height-aware fix: .hero is bottom-anchored (justify-content: flex-end)
+   inside overflow: hidden, so if the content stack is ever taller than the
+   available height, the excess is pushed off the TOP, not the bottom —
+   the kicker line disappears first, silently. Confirmed live at 1536x730
+   (675.3px of content against 657.0px available, an 18.25px overflow) —
+   an entirely ordinary laptop viewport, not an edge case.
+   Breakpoint is 850px, not 750px: at the original (uncompressed) sizes,
+   hand-recomputed margin stays under ~10px for heights up to roughly
+   780px (e.g. 751px tall -> ~675.9px available vs ~675.3px of content —
+   effectively zero margin), so drawing the line at exactly the measured
+   height would leave a second, untested near-miss band just above it.
+   850px clears that band with real margin at both edges.
+   Trims headline size, hero bottom padding and internal spacing so the
+   full stack (kicker + 2-line headline + subhead + button) fits with
+   margin at the measured height AND down to the CSS min-height floor
+   (560px) — see hand-recomputed box model across four heights (560 /
+   650 / 730 / 850) in the build report. */
+@media (max-height: 850px) {
+  :root {
+    --fs-hero: clamp(3rem, 11vw, 8.5rem);
+  }
+  .hero { padding-bottom: clamp(1.5rem, 6vh, 3rem); }
+  .hero__headline { margin-block: 0.1em 0.15em; }
+  .hero__sub { margin-bottom: 1rem; }
+}
+
+/* ==========================================================================
+   Mural — the signature moment
+   ========================================================================== */
+
+.mural {
+  position: relative;
+  height: 100svh;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.mural__media { position: absolute; inset: 0; z-index: 0; }
+.mural__media img { transition: filter 1.1s var(--ease-power2-out); }
+.mural.is-landed .mural__media img { filter: saturate(0.7) contrast(1.18) brightness(0.86); }
+
+.mural__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(14,14,15,0.5) 0%, rgba(14,14,15,0.25) 35%, rgba(14,14,15,0.65) 100%);
+}
+
+.mural__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding-inline: var(--gutter);
+}
+.mural__headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 13vw, 10rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.mural__headline .char {
+  display: inline-block;
+  position: relative;
+}
+/* Small landing glow: a separate blurred pseudo-element whose opacity/scale
+   JS animates — never the box-shadow property itself — to keep the slam
+   transform/opacity-only. */
+.mural__headline .char::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle, rgba(228,35,28,0.9) 0%, rgba(228,35,28,0) 70%);
+  filter: blur(6px);
+  /* driven by JS tweening the --glow custom property on the .char element
+     itself — GSAP can't target a ::after pseudo-element directly */
+  opacity: var(--glow, 0);
+  z-index: -1;
+  border-radius: 50%;
+}
+.mural__caption {
+  font-family: var(--font-condensed);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mural__media img { filter: saturate(0.7) contrast(1.18) brightness(0.86) !important; }
+}
+
+/* ==========================================================================
+   About
+   ========================================================================== */
+
+.about {
+  padding: clamp(4rem, 12vh, 7rem) var(--gutter);
+  max-width: var(--container);
+  margin-inline: auto;
+}
+.about__inner {
+  display: grid;
+  gap: 2.5rem;
+}
+.about__media { order: -1; }
+.photo--about {
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.stat-row {
+  margin-top: clamp(3rem, 8vh, 5rem);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 2.5rem;
+}
+.stat__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-stat);
+  line-height: 0.9;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+.stat__num--word { font-size: clamp(1.8rem, 6vw, 3.4rem); color: var(--gold); }
+.stat--placeholder .stat__num { color: rgba(255,255,255,0.35); }
+.stat__label {
+  font-family: var(--font-condensed);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+@media (min-width: 900px) {
+  .about__inner { grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 4rem; }
+  .about__media { order: 2; }
+  .stat-row { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ==========================================================================
+   Facilities — "walk the floor" horizontal passage
+   ========================================================================== */
+
+.facilities { position: relative; background: var(--ink-2); }
+.facilities__kicker { padding: 2.5rem var(--gutter) 0; }
+
+/* Mobile / reduced-motion default: native snap-scroll carousel. This is a
+   considered, swipeable mobile treatment — not a squeezed desktop layout. */
+.facilities__track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1.5rem var(--gutter) 2rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.facilities__track::-webkit-scrollbar { display: none; }
+
+.facility-panel {
+  position: relative;
+  flex: 0 0 82vw;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.facility-panel__media { aspect-ratio: 4 / 5; }
+.facility-panel__copy { padding: 1.5rem 1.5rem 1.75rem; }
+.facility-panel__index {
+  font-family: var(--font-condensed);
+  color: var(--red);
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+}
+.facility-panel__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-subhead);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0.2em 0 0.5em;
+}
+.facility-panel__text { color: rgba(255,255,255,0.72); max-width: 32ch; }
+
+.facilities__hint {
+  text-align: center;
+  font-family: var(--font-condensed);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
+  padding-bottom: 2rem;
+}
+
+/* Desktop: JS pins this section and scrubs .facilities__track via
+   transform: translateX() to scroll progress (see js/main.js). CSS just
+   needs to get out of the way of the scroll-snap layout at this breakpoint;
+   JS only attaches the pin when matchMedia confirms both the viewport and
+   prefers-reduced-motion allow it. */
+@media (min-width: 1024px) {
+  .facilities.is-pinned-mode .facilities__track {
+    overflow: visible;
+    scroll-snap-type: none;
+    padding: 0;
+    gap: 0;
+    flex-wrap: nowrap;
+    width: max-content;
+    height: 100%;
+  }
+  .facilities.is-pinned-mode { height: 100vh; overflow: hidden; }
+  .facilities.is-pinned-mode .facility-panel {
+    flex: 0 0 100vw;
+    height: 100%;
+    border: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+  .facilities.is-pinned-mode .facility-panel__media { aspect-ratio: auto; height: 100%; }
+  .facilities.is-pinned-mode .facility-panel__copy { padding: 0 clamp(2rem, 6vw, 6rem); }
+  .facilities.is-pinned-mode .facility-panel__text { max-width: 38ch; }
+  .facilities.is-pinned-mode .facilities__hint { display: none; }
+}
+
+/* ==========================================================================
+   Divider band — second brand mantra gets its own real moment
+   ========================================================================== */
+
+.divider-band {
+  position: relative;
+  height: clamp(16rem, 42vh, 24rem);
+}
+.divider-band__scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background: rgba(14,14,15,0.55);
+}
+.divider-band__text {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 9vw, 7rem);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Gallery
+   ========================================================================== */
+
+.gallery { padding: clamp(4rem, 12vh, 7rem) var(--gutter); max-width: var(--container); margin-inline: auto; }
+.gallery__head { margin-bottom: 2.5rem; }
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 200px;
+  grid-auto-flow: dense;
+  gap: 1rem;
+}
+.gallery-item { grid-column: span 1; }
+/* fixed ratio per fixed row-height + span count — deliberate, not arbitrary.
+   --lg is a TALL span (not 2x2) because its source photo is a low-angle
+   floor-to-ceiling shot; a tall crop keeps that sweep instead of flattening
+   it into a square. At the 2-col mobile width that span would make the
+   column dangerously narrow (~165px), so mobile gets a shorter 1x1 footprint
+   and the tall treatment only applies from 720px up where there's enough
+   column width for it to read as a considered crop rather than a sliver. */
+.gallery-item--lg { grid-column: span 1; grid-row: span 1; }
+.gallery-item--wide { grid-column: span 2; grid-row: span 1; }
+.gallery-item--sq { grid-column: span 1; grid-row: span 1; }
+
+@media (min-width: 720px) {
+  .gallery__grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 240px; }
+  .gallery-item--lg { grid-row: span 2; }
+}
+@media (min-width: 1024px) {
+  .gallery__grid { grid-auto-rows: 260px; }
+}
+
+/* ==========================================================================
+   Membership
+   ========================================================================== */
+
+.membership { padding: clamp(4rem, 12vh, 7rem) var(--gutter); max-width: var(--container); margin-inline: auto; text-align: center; }
+.membership .section-head { margin-bottom: 0.75rem; }
+
+.tiers {
+  margin-top: 3rem;
+  display: grid;
+  gap: 1.75rem;
+  text-align: left;
+}
+
+.tier-card {
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.tier-card--featured {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, rgba(255,199,44,0.08), transparent 40%);
+}
+.tier-card__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  text-transform: uppercase;
+}
+.tier-card__price { display: flex; align-items: baseline; gap: 0.35em; }
+.tier-card__amount { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3rem); }
+.tier-card--featured .tier-card__amount { color: var(--gold); font-size: clamp(2.4rem, 7vw, 3.6rem); }
+.tier-card__period { font-family: var(--font-condensed); color: rgba(255,255,255,0.5); }
+.tier-card__features { display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+.tier-card__features li {
+  color: rgba(255,255,255,0.75);
+  padding-left: 1.2em;
+  position: relative;
+  font-size: 0.95rem;
+}
+.tier-card__features li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.55em;
+  width: 7px; height: 7px;
+  background: var(--red);
+}
+
+/* Recommended-tier hang-tag — echoes a gym equipment weight tag rather
+   than the generic "scaled 110% + ribbon" cliché. */
+.tag-flag {
+  position: absolute;
+  top: -14px;
+  right: 24px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--font-condensed);
+  font-size: 0.72rem;
+  line-height: 1.15;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0.5em 0.9em 0.9em;
+  transform: rotate(-6deg);
+  clip-path: polygon(0 0, 100% 0, 100% 68%, 50% 100%, 0 68%);
+}
+
+@media (min-width: 900px) {
+  .tiers { grid-template-columns: repeat(3, 1fr); }
+  .tier-card--featured { transform: translateY(-0.75rem); }
+}
+
+/* ==========================================================================
+   Team
+   ========================================================================== */
+
+.team { padding: clamp(4rem, 12vh, 7rem) var(--gutter); max-width: var(--container); margin-inline: auto; text-align: center; }
+.team__grid {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+.team-card { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+.team-card__badge {
+  width: clamp(84px, 18vw, 112px);
+  height: clamp(84px, 18vw, 112px);
+  border-radius: 50%;
+  background: var(--ink-2);
+  border: 2px solid var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.team-card__badge span {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  color: var(--white);
+}
+.team-card__role {
+  font-family: var(--font-condensed);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+}
+.team-card__note { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+
+@media (min-width: 720px) {
+  .team__grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ==========================================================================
+   Testimonials
+   ========================================================================== */
+
+.testimonials { padding: clamp(4rem, 12vh, 7rem) var(--gutter); max-width: var(--container); margin-inline: auto; text-align: center; }
+.quotes {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 2.5rem;
+  text-align: left;
+}
+.quote p {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+.quote cite {
+  display: block;
+  margin-top: 1rem;
+  font-family: var(--font-condensed);
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+}
+
+@media (min-width: 900px) {
+  .quotes { grid-template-columns: 1fr 1fr; }
+}
+
+/* ==========================================================================
+   Join / contact
+   ========================================================================== */
+
+.join { padding: clamp(4rem, 12vh, 7rem) var(--gutter); max-width: var(--container); margin-inline: auto; }
+.join__inner { display: grid; gap: 3rem; }
+.btn--phone { margin-top: 1.75rem; }
+.join__meta { margin-top: 2rem; }
+.join__address { color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+.join__map {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--rubber-2);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  overflow: hidden;
+}
+.join__map-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.07) 0 1px, transparent 1px 42px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.07) 0 1px, transparent 1px 42px);
+}
+.join__map-pin { position: relative; z-index: 1; }
+.join__map-label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-condensed);
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.8rem;
+}
+
+@media (min-width: 900px) {
+  .join__inner { grid-template-columns: 1.1fr 0.9fr; align-items: center; }
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer { background: var(--rubber-2); border-top: 3px solid var(--red); }
+
+.marquee {
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-block: 0.9rem;
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  text-transform: uppercase;
+  color: var(--red);
+  white-space: nowrap;
+  animation: marquee 22s linear infinite;
+}
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation-play-state: paused; }
+}
+
+.footer-main {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: 3rem var(--gutter);
+  display: grid;
+  gap: 2.5rem;
+}
+.footer-logo svg { height: 28px; width: auto; }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 1.25rem 1.75rem; }
+.footer-nav a { font-family: var(--font-condensed); letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.95rem; color: rgba(255,255,255,0.75); }
+.footer-nav a:hover { color: var(--gold); }
+.footer-contact { display: flex; align-items: center; gap: 1.5rem; }
+.footer-contact > a:first-child { font-family: var(--font-condensed); letter-spacing: 0.05em; font-size: 1.1rem; }
+.footer-social { display: flex; gap: 1rem; }
+.footer-social a { opacity: 0.7; }
+.footer-social a:hover { opacity: 1; color: var(--gold); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 1.25rem var(--gutter);
+  text-align: center;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.8rem;
+}
+
+@media (min-width: 900px) {
+  .footer-main { grid-template-columns: auto 1fr auto; align-items: center; }
+}
+
+/* ==========================================================================
+   Reduced motion — global safety net
+   (component-specific fallbacks live alongside each component above)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee__track { animation: none; transform: none; }
+}

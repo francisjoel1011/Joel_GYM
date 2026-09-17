@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 170" role="img" aria-label="Joel Gym">
+  <title>Joel Gym</title>
+  <!--
+    Horizontal wordmark. White type, transparent ground, one non-negotiable
+    detail: the O in JOEL is a solid filled red circle (not a ring, not a
+    dot) — a direct match to the reception LED sign and the 3D turf-wall
+    lettering on the real premises. Faithful re-set, not a new logotype.
+
+    This file is self-contained (fonts requested via @import with a bold
+    condensed system fallback chain), so it degrades gracefully if opened
+    without network access. The live site inlines this same markup directly
+    in index.html so it always inherits the page's already-loaded Anton.
+  -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&amp;display=swap');
+    .wordmark {
+      font-family: 'Anton', 'Arial Narrow Bold', 'Arial Black', sans-serif;
+      font-size: 150px;
+      letter-spacing: -2px;
+      fill: #FFFFFF;
+    }
+  </style>
+  <text class="wordmark" x="0" y="135">J</text>
+  <circle cx="136" cy="75" r="59" fill="#E4231C"/>
+  <text class="wordmark" x="203" y="135">EL</text>
+  <text class="wordmark" x="425" y="135">GYM</text>
+</svg>
