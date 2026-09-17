@@ -609,6 +609,10 @@ html.js .preloader {
 }
 .stat__num--word { font-size: clamp(1.8rem, 6vw, 3.4rem); color: var(--gold); }
 .stat--placeholder .stat__num { color: rgba(255,255,255,0.35); }
+.stat--link { text-decoration: none; color: inherit; display: block; }
+.stat--link:hover .stat__label,
+.stat--link:focus-visible .stat__label { color: rgba(255,255,255,0.9); }
+.stat__star { font-size: 0.45em; margin-left: 0.1em; vertical-align: super; }
 .stat__label {
   font-family: var(--font-condensed);
   letter-spacing: 0.05em;
@@ -912,6 +916,25 @@ html.js .preloader {
   font-size: 0.85rem;
 }
 
+.testimonials__rating {
+  margin-top: 0.75rem;
+  font-family: var(--font-condensed);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+.testimonials__rating a {
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.testimonials__rating a:hover,
+.testimonials__rating a:focus-visible {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
 @media (min-width: 900px) {
   .quotes { grid-template-columns: 1fr 1fr; }
 }
@@ -925,34 +948,37 @@ html.js .preloader {
 .btn--phone { margin-top: 1.75rem; }
 .join__meta { margin-top: 2rem; }
 .join__address { color: rgba(255,255,255,0.7); line-height: 1.6; }
+.join__hours { margin-top: 0.5rem; color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+.join__directions {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-family: var(--font-condensed);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,199,44,0.4);
+}
+.join__directions:hover,
+.join__directions:focus-visible { border-color: var(--gold); }
 
 .join__map {
   position: relative;
   aspect-ratio: 4 / 3;
   background: var(--rubber-2);
   border: 1px solid rgba(255,255,255,0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
   overflow: hidden;
 }
-.join__map-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(255,255,255,0.07) 0 1px, transparent 1px 42px),
-    repeating-linear-gradient(90deg, rgba(255,255,255,0.07) 0 1px, transparent 1px 42px);
-}
-.join__map-pin { position: relative; z-index: 1; }
-.join__map-label {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-condensed);
-  letter-spacing: 0.14em;
-  color: rgba(255,255,255,0.45);
-  font-size: 0.8rem;
+.join__map-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  /* Cheap dark-mode fake for a stock Maps embed (no API key/billing needed):
+     invert lightness, then rotate hue back so land/water/roads land close to
+     their real colors instead of the raw inverted ones. */
+  filter: invert(90%) hue-rotate(180deg) brightness(0.95) contrast(0.9);
 }
 
 @media (min-width: 900px) {

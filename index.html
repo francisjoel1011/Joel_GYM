@@ -24,6 +24,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Archivo:wght@100..900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/style.css">
+
+<!-- Real business data, sourced directly from the gym's own Google Maps listing -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ExerciseGym",
+  "name": "Joel Gym & Fitness Studio",
+  "image": "assets/img/gym-017-full.webp",
+  "telephone": "+919940221323",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Plot 14, Main Road, Nehru Nagar, Pozhichalur, Polichalur",
+    "addressRegion": "Tamil Nadu",
+    "postalCode": "600074",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 12.9816559,
+    "longitude": 80.1382333
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "275"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -178,12 +206,10 @@
         <p class="stat__num stat__num--word">A/C</p>
         <p class="stat__label">Year-round comfort</p>
       </div>
-      <div class="stat stat--placeholder">
-        <!-- placeholder: replace with real years-running figure -->
-        <p class="stat__num">&mdash;</p>
-        <p class="stat__label">Years on the floor</p>
-        <p class="sample-note">Add your number</p>
-      </div>
+      <a class="stat stat--link" href="https://www.google.com/maps/place/joel+gym/data=!4m2!3m1!1s0x3a525fb3c2105291:0x61d211465a3f2627?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener noreferrer">
+        <p class="stat__num stat__num--word">4.9<span class="stat__star" aria-hidden="true">&#9733;</span></p>
+        <p class="stat__label">275 Google reviews</p>
+      </a>
     </div>
   </section>
 
@@ -391,17 +417,21 @@
   <!-- ============================= TESTIMONIALS ============================= -->
   <section class="testimonials" id="testimonials">
     <p class="kicker">From the Floor</p>
-    <p class="sample-note sample-note--center">Sample quotes for layout — real member stories coming soon.</p>
+    <p class="testimonials__rating">
+      <a href="https://www.google.com/maps/place/joel+gym/data=!4m2!3m1!1s0x3a525fb3c2105291:0x61d211465a3f2627?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener noreferrer">4.9&#9733; from 275 real reviews on Google &rarr;</a>
+    </p>
 
-    <!-- placeholder: replace with real member testimonials -->
+    <!-- Real quotes, trimmed to the last complete sentence visible on the gym's
+         public Google listing (the full reviews are longer but truncated by
+         Google's own UI) — never invent or complete a reviewer's sentence. -->
     <div class="quotes">
       <blockquote class="quote">
-        <p>&ldquo;Six months in and I've stopped dreading leg day. The floor here doesn't play.&rdquo;</p>
-        <cite>&mdash; Placeholder Member</cite>
+        <p>&ldquo;I&rsquo;ve been training at this gym for a while now, and honestly, it&rsquo;s been a great experience from day one. The environment is clean, well-maintained, and has all the equipment you need whether you&rsquo;re a beginner or more advanced.&rdquo;</p>
+        <cite>&mdash; Manju MN, Google review</cite>
       </blockquote>
       <blockquote class="quote">
-        <p>&ldquo;Unisex, A/C, and nobody's watching the clock over your shoulder. That's the whole pitch.&rdquo;</p>
-        <cite>&mdash; Placeholder Member</cite>
+        <p>&ldquo;Joel Gym is a great place to work out with a motivating and friendly environment. The equipment is well-maintained, and the gym is clean and comfortable. Trainer Gladwin is very professional, supportive, and knowledgeable.&rdquo;</p>
+        <cite>&mdash; Abisha J, Google review</cite>
       </blockquote>
     </div>
   </section>
@@ -422,18 +452,23 @@
         </a>
 
         <div class="join__meta">
-          <!-- placeholder: replace with real address and hours -->
-          <p class="join__address">Address on request &mdash; call ahead<br>Hours: Mon&ndash;Sat, placeholder timing</p>
-          <p class="sample-note">Address and hours are placeholders — confirm by phone for now.</p>
+          <p class="join__address">Plot 14, Main Road, Nehru Nagar, Pozhichalur,<br>Polichalur, Tamil Nadu 600074</p>
+          <!-- Only the "opens 4 PM" data point is confirmed (from the gym's own
+               Google listing at time of writing) — full weekly hours weren't
+               reachable, so this doesn't claim a precise schedule it can't back up. -->
+          <p class="join__hours">Open today from 4&nbsp;PM &mdash; call ahead to confirm full weekly hours.</p>
+          <a class="join__directions" href="https://www.google.com/maps/place/joel+gym/data=!4m2!3m1!1s0x3a525fb3c2105291:0x61d211465a3f2627?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener noreferrer">Get directions &rarr;</a>
         </div>
       </div>
 
-      <div class="join__map" role="img" aria-label="Placeholder map — real location pending">
-        <div class="join__map-grid" aria-hidden="true"></div>
-        <div class="join__map-pin" aria-hidden="true">
-          <svg viewBox="0 0 24 32" width="28" height="36"><path fill="#E4231C" d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12Z"/><circle cx="12" cy="12" r="5" fill="#0E0E0F"/></svg>
-        </div>
-        <p class="join__map-label">MAP COMING SOON</p>
+      <div class="join__map">
+        <iframe
+          class="join__map-frame"
+          src="https://www.google.com/maps?q=12.9816559,80.1382333&z=16&output=embed"
+          title="Map showing Joel Gym's real location in Pozhichalur, Chennai"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
     </div>
   </section>
