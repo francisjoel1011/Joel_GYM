@@ -518,8 +518,20 @@ html.js .preloader {
   overflow: hidden;
 }
 .mural__media { position: absolute; inset: 0; z-index: 0; }
-.mural__media img { transition: filter 1.1s var(--ease-power2-out); }
-.mural.is-landed .mural__media img { filter: saturate(0.7) contrast(1.18) brightness(0.86); }
+/* "Landed" grade is a second, pre-filtered copy of the same image, stacked
+   and crossfaded via opacity (compositor-only) instead of animating the
+   filter property on one image, which would force a full repaint per frame. */
+.mural__media-landed {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.7) contrast(1.18) brightness(0.86);
+  opacity: 0;
+  transition: opacity 1.1s var(--ease-power2-out);
+}
+.mural.is-landed .mural__media-landed { opacity: 1; }
 
 .mural__scrim {
   position: absolute;
@@ -571,7 +583,7 @@ html.js .preloader {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mural__media img { filter: saturate(0.7) contrast(1.18) brightness(0.86) !important; }
+  .mural__media-landed { opacity: 1 !important; transition: none !important; }
 }
 
 /* ==========================================================================

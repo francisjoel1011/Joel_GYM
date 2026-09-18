@@ -44,7 +44,7 @@
   },
   "openingHoursSpecification": [
     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "05:00", "closes": "11:59" },
-    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "16:00", "closes": "22:30" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "16:00", "closes": "22:00" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "06:00", "closes": "12:00" }
   ],
   "geo": {
@@ -165,13 +165,23 @@
         style="--photo-ev:1.0; object-position:50% 45%"
         data-mural-img
         src="assets/img/gym-014-full.webp"
-        alt="The gym's own hand-painted brick-wall mural: a clenched fist gripping a barbell above the words Never Give Up"
+        alt="The gym's own brick-wall mural: a sticker decal of a clenched fist gripping a barbell above the words Never Give Up"
+      >
+      <!-- Same photo, pre-filtered to the "landed" grade. Crossfading its
+           opacity in (compositor-only) replaces animating the filter
+           property directly, which forces a repaint every frame. -->
+      <img
+        class="mural__media-landed"
+        style="object-position:50% 45%"
+        src="assets/img/gym-014-full.webp"
+        alt=""
+        aria-hidden="true"
       >
     </div>
     <div class="mural__scrim" aria-hidden="true"></div>
     <div class="mural__content">
       <h2 class="mural__headline" data-split-chars>NEVER GIVE UP</h2>
-      <p class="mural__caption">Hand-painted on our own wall. We just brought it to the screen.</p>
+      <p class="mural__caption">Stuck up on our own wall, sticker by sticker. We just brought it to the screen.</p>
     </div>
   </section>
 
@@ -350,16 +360,16 @@
     <h2 class="section-head">PICK YOUR<br>RACK</h2>
     <p class="membership__note">Real rates from our own price list — pick a track, then a duration.</p>
 
-    <!-- Real fee structure, sourced directly from the gym's own rate card
-         (posted to its Instagram highlights). Not a placeholder. -->
+    <!-- Real fee structure, sourced directly from the gym's own current rate
+         card (owner-supplied photo, images/new_gym_fee_structure.jpeg). Not a placeholder. -->
     <div class="tiers tiers--pricing">
       <article class="tier-card">
         <h3 class="tier-card__name">WEIGHT TRAINING</h3>
         <ul class="price-list">
-          <li><span class="price-list__term">1 Month</span><span class="price-list__amount">&#8377;1,000</span></li>
-          <li><span class="price-list__term">3 Months</span><span class="price-list__amount">&#8377;2,500</span></li>
-          <li><span class="price-list__term">6 Months</span><span class="price-list__amount">&#8377;4,000</span></li>
-          <li class="price-list__best"><span class="price-list__term">12 Months</span><span class="price-list__amount">&#8377;6,000</span></li>
+          <li><span class="price-list__term">1 Month</span><span class="price-list__amount">&#8377;1,500</span></li>
+          <li><span class="price-list__term">3 Months</span><span class="price-list__amount">&#8377;2,700</span></li>
+          <li><span class="price-list__term">6 Months</span><span class="price-list__amount">&#8377;4,500</span></li>
+          <li class="price-list__best"><span class="price-list__term">12 Months</span><span class="price-list__amount">&#8377;7,000</span></li>
         </ul>
         <a class="btn btn--outline btn--block" href="#join" data-magnetic>Join Now</a>
       </article>
@@ -367,10 +377,10 @@
       <article class="tier-card">
         <h3 class="tier-card__name">CARDIO</h3>
         <ul class="price-list">
-          <li><span class="price-list__term">1 Month</span><span class="price-list__amount">&#8377;1,500</span></li>
-          <li><span class="price-list__term">3 Months</span><span class="price-list__amount">&#8377;4,000</span></li>
-          <li><span class="price-list__term">6 Months</span><span class="price-list__amount">&#8377;6,000</span></li>
-          <li class="price-list__best"><span class="price-list__term">12 Months</span><span class="price-list__amount">&#8377;8,000</span></li>
+          <li><span class="price-list__term">1 Month</span><span class="price-list__amount">&#8377;2,000</span></li>
+          <li><span class="price-list__term">3 Months</span><span class="price-list__amount">&#8377;3,800</span></li>
+          <li><span class="price-list__term">6 Months</span><span class="price-list__amount">&#8377;5,500</span></li>
+          <li class="price-list__best"><span class="price-list__term">12 Months</span><span class="price-list__amount">&#8377;9,000</span></li>
         </ul>
         <a class="btn btn--outline btn--block" href="#join" data-magnetic>Join Now</a>
       </article>
@@ -378,7 +388,7 @@
 
     <p class="membership__terms">
       Personal training available separately — ask at the front desk.<br>
-      Fees are paid in advance and are non-refundable and non-adjustable. No admission fee for new members. Bring a towel.
+      Fees are paid in advance. No admission fee for new members. Towel compulsory.
     </p>
   </section>
 
@@ -456,7 +466,7 @@
                (two independent posts agree); Google's listing says "Plot 14"
                — flagged to the owner as a listing discrepancy to resolve. -->
           <p class="join__address">Plot No. 13, Nehru Nagar, Pozhichalur Main Road<br>(Above City Union Bank), Chennai &ndash; 600074</p>
-          <p class="join__hours">Mon&ndash;Sat: 5&ndash;11:59&nbsp;AM &amp; 4&ndash;10:30&nbsp;PM &middot; Sun: 6&nbsp;AM&ndash;12&nbsp;PM</p>
+          <p class="join__hours">Mon&ndash;Sat: 5&ndash;11:59&nbsp;AM &amp; 4&ndash;10&nbsp;PM &middot; Sun: 6&ndash;11:59&nbsp;AM</p>
           <a class="join__directions" href="https://www.google.com/maps/place/joel+gym/data=!4m2!3m1!1s0x3a525fb3c2105291:0x61d211465a3f2627?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener noreferrer">Get directions &rarr;</a>
         </div>
       </div>

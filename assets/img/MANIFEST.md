@@ -34,3 +34,6 @@ Text worth reusing from these posters (not the images themselves): the mantra **
 
 ## Not present
 There is no `gym-image-001` in the source folder — numbering starts at 002. Not an error, just a gap in the original filenames.
+
+## Other source files (not part of the `gym-image-*` sequence)
+- **`new_gym_fee_structure.jpeg`** — a rate-card infographic (pricing + hours), owner-supplied. Data source for the Membership/Join sections' copy, not facility photography — `scripts/optimize-images.py` doesn't touch it (its glob only matches `gym-image-*.png`), and it should never be used as a gallery/hero image.

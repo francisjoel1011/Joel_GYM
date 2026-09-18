@@ -128,7 +128,7 @@ Following the approved plan's order.
 Stack is fixed by the approved plan: GSAP + ScrollTrigger + Lenis. Lenis lerp should sit heavier than a fashion/editorial site's floaty feel — around `0.1–0.12` — so scrolling has resistance, appropriate to an "iron" metaphor rather than airiness.
 
 **Earns its place:**
-- **The mural reveal** (see signature moment, section 8) — split-character slam-in on "NEVER GIVE UP," justified because the mural is already hand-painted letter-by-letter on the real wall; the animation re-enacts the mural's own physicality rather than decorating arbitrary text.
+- **The mural reveal** (see signature moment, section 8) — split-character slam-in on "NEVER GIVE UP," justified because the mural is already a sticker decal applied letter-by-letter on the real wall (corrected: not hand-painted); the animation re-enacts the mural's own physicality rather than decorating arbitrary text.
 - **Horizontal "walk the floor" passage** for facilities — maps 1:1 to physically walking the gym; see section 5.
 - **Clip-path "un-rack" image reveals** in the gallery, scrubbed to scroll velocity via ScrollTrigger — each photo arrives like a plate being loaded onto a bar, not a generic fade-up.
 - **Magnetic/weighted CTA buttons** — a slight resist-then-snap on hover/press (GSAP `elastic.out(1, 0.4)` on release, transform/opacity only) that echoes the mural's gripped-fist motif. Cheap, 60fps-safe, and tied to the brand rather than a generic hover trend.
@@ -161,7 +161,7 @@ The problem: real environmental photos taken at different times, on different ph
 
 ## 8. Signature moment (the screenshot)
 
-**The mural reveal.** As the user scrolls out of the hero, pin `gym-014` (the clean fist-and-barbell mural shot, no people) full-frame. "NEVER GIVE UP" slams into place letter by letter in Anton — each letter landing on a fast snap (GSAP `power4.out`) with a small settle-overshoot (`back.out(1.7)`), like a plate hitting a rack: a 2–3px scale-punch and a brief red-LED-style glow flash on landing, transform/opacity only. Once fully landed, the mural photograph itself desaturates slightly further and locks into the Iron Grade, visibly "joining" the real wall to the site's own visual world. This is the brand's own hand-painted mantra becoming the site's kinetic-type centerpiece — a direct, physical bridge between the real space and the screen, not type laid decoratively over an unrelated photo. It is buildable entirely in the approved stack (GSAP + ScrollTrigger + SplitType), no WebGL required.
+**The mural reveal.** As the user scrolls out of the hero, pin `gym-014` (the clean fist-and-barbell mural shot, no people) full-frame. "NEVER GIVE UP" slams into place letter by letter in Anton — each letter landing on a fast snap (GSAP `power4.out`) with a small settle-overshoot (`back.out(1.7)`), like a plate hitting a rack: a 2–3px scale-punch and a brief red-LED-style glow flash on landing, transform/opacity only. Once fully landed, the mural photograph itself desaturates slightly further and locks into the Iron Grade, visibly "joining" the real wall to the site's own visual world. This is the brand's own sticker-decal mantra becoming the site's kinetic-type centerpiece — a direct, physical bridge between the real space and the screen, not type laid decoratively over an unrelated photo. It is buildable entirely in the approved stack (GSAP + ScrollTrigger + SplitType), no WebGL required.
 
 ---
 

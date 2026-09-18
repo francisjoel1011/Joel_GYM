@@ -236,17 +236,19 @@
     });
   })();
 
-  // Gallery — clip-path "un-rack" reveal, scrubbed to scroll velocity.
+  // Gallery — "un-rack" reveal, scrubbed to scroll velocity. Slides + zooms
+  // the <img> itself (xPercent + scale, both transform) inside the item's
+  // existing static overflow:hidden — visually the same wipe as animating
+  // clip-path directly, without clip-path's per-frame repaint cost.
   (function gallery() {
     if (!hasGSAP || !hasScrollTrigger || reduceMotion) return;
     document.querySelectorAll("[data-gallery-item]").forEach(function (item) {
       var img = item.querySelector("img");
       if (!img) return;
-      gsap.timeline({
+      gsap.fromTo(img, { xPercent: -100, scale: 1.15 }, {
+        xPercent: 0, scale: 1, ease: "power3.out",
         scrollTrigger: { trigger: item, start: "top 92%", end: "top 55%", scrub: 0.5 }
-      })
-        .fromTo(item, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", ease: "power3.out" }, 0)
-        .fromTo(img, { scale: 1.15 }, { scale: 1, ease: "power3.out" }, 0);
+      });
     });
   })();
 
